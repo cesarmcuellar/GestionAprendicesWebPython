@@ -1,0 +1,171 @@
+<html>
+    <head>
+        <title>GESTIONAR APRENDICES</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+        <script src="{{url_for('static', filename='js/funciones.js')}}"></script>
+
+    </head>
+    <body>
+        <p>
+        <div class="container">
+            <form name="frmContacto" id="frmContacto"  enctype="multipart/form-data">            
+                <table style="width: 50%" align="center" border="1" class="table table-bordered">
+                    <thead class="thead-dark">
+                        <tr style="text-align: center">
+                            <th colspan="2">GESTIÓN CONTACTOS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Identificacion</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="number" name="txtIdentificacion"  id="txtIdentificacion"
+                                           value="" class="form-control" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nombres:</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="txtNombres" id="txtNombres"
+                                           value="" class="form-control"  />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Apellidos: </td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="txtApellidos" id="txtApellidos"
+                                           value="" class="form-control"  />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Correo: </td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="email" name="txtCorreo" id="txtCorreo"
+                                           value="" class="form-control"  />
+                                </div>
+                            </td>
+                        </tr>                                          
+                        <tr>
+                            <td>Fecha Nacimiento: </td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="date" name="txtFechaNacimiento" id="txtFechaNacimiento"
+                                           value="" class="form-control" />
+                                </div>
+                            </td>
+                        </tr>
+                        <!--<tr>
+                            <td>Foto: </td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="file" name="fileFoto" id="fileFoto"
+                                           value="" class="form-control" />
+                                </div>
+                            </td>
+                        </tr>-->
+                        <tr>
+                            <td colspan="2">
+                                    <input type="button" value="Agregar" name="btnAgregar"
+                                           id="btnAgregar" class="btn btn-success btn-m" />
+                                    <input type="button" value="Consultar" name="btnConsultar"
+                                          id="btnConsultar" class="btn btn-success btn-m" />
+                                    <input type="button" value="Actualizar" name="btnActualizar"
+                                           id="btnActualizar" class="btn btn-success btn-m" />                                
+                                    <input type="button" value="Eliminar"  name="btnEliminar"
+                                           id="btnEliminar" class="btn btn-success btn-m" />                            
+                                    <input type="button" value="Listar" name="btnListar"
+                                          id="btnListar" class="btn btn-success btn-m" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--Campos ocultos -->
+                <input type="hidden" value="" id="idContacto" name="idContacto">                
+            </form>
+            <p>
+                <!-- div creado para mostrar mensajes -->
+            <div id="msj" class="alert alert-info alert-dismissible" style="display: none; height: 40px">
+                    <strong>
+                        <div id="mensajeInterno" style="text-align:center">
+                                    
+                        </div>
+                    </strong>
+            </div>
+            <div id="mensaje" style="text-align:center">
+                                    
+            </div>    
+            
+            
+            <table id="tblContactos" align="center" class="table table-bordered" 
+                   style="width: 70%; display: none">
+                <thead>
+                    <tr class="bg-dark text-white" style="text-align: center">
+                        <th>Identificación</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Correo</th>                        
+                        <th>Fecha Nacimiento</th>            
+                    </tr>
+                </thead>
+                <tbody>                    
+                    <tr id="fila" class="primeraFila">
+                        <td id="aIdentifica"></td>
+                        <td id="aNombres"></td>
+                        <td id="aApellidos"></td>
+                        <td id="aCorreo"></td>
+                        <td id="aFechaNacimiento"></td>            
+                    </tr>
+                </tbody>
+            </table>
+            
+            </p>            
+        </div>
+
+        <!--  Ventana modal cuando se va a eliminar -->   
+        <!-- The Modal -->
+        <div class="modal" id="modalEliminar">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Encabezado -->
+                    <div class="modal-header bg-info text-white">
+                    <h4 class="modal-title">Eliminar Contacto</h4>
+                    <button type="button" class="text-white close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal Contenido -->
+                    <div class="modal-body">
+                    ¿Está seguro de eliminar el Contacto?
+                    </div>
+
+                    <!-- Modal Pie Página -->
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="btnSiModal">Si</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        
+    </body>
+</html>
+
+
