@@ -159,6 +159,28 @@ def subirArchivo():
     f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     # Retornamos una respuesta satisfactoria
     return "<h1>Archivo subido exitosamente</h1>"
+	
+@app.route("/subirArchivo2", methods=['POST'])
+def subirArchivo2():
+ if request.method == 'POST':
+    # obtenemos el archivo del input "archivo"
+    f = request.files['fileFoto']
+    filename = secure_filename(f.filename)
+    # Guardamos el archivo en el directorio "Archivos PDF"
+    f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    # Retornamos una respuesta satisfactoria
+    return "<h1>Archivo subido exitosamente</h1>"
+	
+@app.route("/subirArchivo3", methods=['POST'])
+def subirArchivo3():
+ if request.method == 'POST':
+    # obtenemos el archivo del input "archivo"
+    f = request.files['fileFoto']
+    filename = secure_filename(f.filename)
+    # Guardamos el archivo en el directorio "Archivos PDF"
+    f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    # Retornamos una respuesta satisfactoria
+    return "<h1>Archivo subido exitosamente</h1>"
 
 if (__name__== "__main__"):
     app.run(port=3000,debug=True)
